@@ -83,3 +83,8 @@ void event_loop(NIO_Server *server) {
 }
 
 
+// 关闭服务器资源
+void server_cleanup(NIO_Server *server) {
+    if (server->listen_fd > 0) close(server->listen_fd);
+    if (server->epoll_fd > 0) close(server->epoll_fd);
+}
