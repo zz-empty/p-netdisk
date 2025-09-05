@@ -39,3 +39,47 @@ int server_init(NIO_Server *server) {
     printf("Server listening on Port %d\n", server->port);
     return 0;
 }
+
+// 初始化epoll实例
+static int init_epoll(NIO_Server *server) {
+    server->epoll_fd = epoll_create(0);
+    if (-1 == server->epoll_fd) {
+        perror("epoll creation failed");
+        return -1;
+    }
+
+    struct epoll_event ev;
+    ev.events = EPOLLIN;
+    ev.data.fd = server->listen_fd;
+
+    if (epoll_ctl(server->epoll_fd, EPOLL_CTL_ADD, server->listen_fd, &ev) < 0) {
+        perror("epoll_ctl add listen_fd failed");
+        return -2;
+    }
+
+    return 0;
+}
+
+// 启动事件循环
+void event_loop(NIO_Server *server) {
+    if (init_epoll(server) < 0) {
+        return;
+    }
+
+    struct epoll_event events[MAX_EVENTS];
+
+    while (1) {
+        int nready = epoll_wait(server->epoll_fd, events, MAX_EVENTS, -1);
+        if (-1 == nready) {
+            perror("epoll_wait error");
+            break;
+        }
+
+        for (int i = 0; i < nready; ++i) {
+            // 处理新连接，后续补充
+            printf("Event received on fd %d\n", events[i].data.fd);
+        }
+    }
+}
+
+
