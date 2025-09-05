@@ -1,0 +1,24 @@
+# 编译产物
+*.o
+*.a
+bin/
+build/
+*.out
+
+# 配置文件
+*.conf
+
+# 开发环境
+.vscode/
+.idea/
+
+# 系统文件
+.DS_Store
+*.swp
+
+# 数据文件
+/server/data/*
+!/server/data/.gitkeep
+
+# 日志文件
+**/log/
