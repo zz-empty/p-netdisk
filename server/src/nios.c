@@ -42,7 +42,7 @@ int server_init(NIO_Server *server) {
 
 // 初始化epoll实例
 static int init_epoll(NIO_Server *server) {
-    server->epoll_fd = epoll_create(0);
+    server->epoll_fd = epoll_create1(0);
     if (-1 == server->epoll_fd) {
         perror("epoll creation failed");
         return -1;

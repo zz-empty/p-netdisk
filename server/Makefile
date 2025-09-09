@@ -4,7 +4,7 @@ LDFLAGS = -lpthread -lcrypto
 
 SRC_DIR = src
 OBJ_DIR = build/obj
-BIN_DIR = build/bin
+BIN_DIR = bin
 
 SRCS = $(wildcard $(SRC_DIR)/*.c $(SRC_DIR)/*/*.c)
 OBJS = $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(SRCS))
@@ -23,4 +23,3 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 
 clean:
 	rm -rf build
-
